@@ -96,20 +96,31 @@ namespace back.Controllers
         [HttpPost("saveFichier")]
         public JsonResult post2()
         {
+            string[] listeExtension = { ".pdf", ".png" };
+
             // Request.Form => $_POST en PHP
             var httpRequest = Request.Form;
 
             // httpRequest.Files[0] => $_FILES
-            var fichier = httpRequest.Files[0];
+            IFormFile fichier = httpRequest.Files[0];
 
-            string nomFichier = fichier.FileName;
+            string msg = Protection.Image(fichier, 8000, listeExtension);
 
-            var cheminDossier = env.ContentRootPath + "/image/" + nomFichier;
-            
-            // upload dans le dossier image
-            using(var stream = new FileStream(cheminDossier, FileMode.Create))
+            if (msg == "ok")
             {
-                fichier.CopyTo(stream);
+                string nomFichier = fichier.FileName.Trim();
+
+                var cheminDossier = env.ContentRootPath + "/image/" + nomFichier;
+
+                // upload dans le dossier image
+                using (var stream = new FileStream(cheminDossier, FileMode.Create))
+                {
+                    fichier.CopyTo(stream);
+                }
+            }
+            else
+            {
+                return new JsonResult(msg);
             }
 
             // convertion string en tableau int

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Xampp\\htdocs\\testASP_Angular\\back\\back\\back.csproj": {}
+    "D:\\Xampp\\htdocs\\testASP_API\\back\\back\\back.csproj": {}
   },
   "projects": {
-    "D:\\Xampp\\htdocs\\testASP_Angular\\back\\back\\back.csproj": {
+    "D:\\Xampp\\htdocs\\testASP_API\\back\\back\\back.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Xampp\\htdocs\\testASP_Angular\\back\\back\\back.csproj",
+        "projectUniqueName": "D:\\Xampp\\htdocs\\testASP_API\\back\\back\\back.csproj",
         "projectName": "back",
-        "projectPath": "D:\\Xampp\\htdocs\\testASP_Angular\\back\\back\\back.csproj",
+        "projectPath": "D:\\Xampp\\htdocs\\testASP_API\\back\\back\\back.csproj",
         "packagesPath": "C:\\Users\\nicol\\.nuget\\packages\\",
-        "outputPath": "D:\\Xampp\\htdocs\\testASP_Angular\\back\\back\\obj\\",
+        "outputPath": "D:\\Xampp\\htdocs\\testASP_API\\back\\back\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
