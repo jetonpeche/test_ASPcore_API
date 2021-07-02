@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿#region using
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using back.Classe;
+using System.Net.Mail;
+using System.Net;
+#endregion
 
 namespace back.Controllers
 {
@@ -21,9 +25,11 @@ namespace back.Controllers
     {
         private MySqlConnection connection;
         private readonly IWebHostEnvironment env;
+        private readonly IConfiguration config;
 
         public DepartementController(IConfiguration _config, IWebHostEnvironment _env)
         {
+            config = _config;
             env = _env;
 
             // bdd => connexion a la BDD mySQL
@@ -141,6 +147,31 @@ namespace back.Controllers
             {
                 return new JsonResult("existe");
             }
+        }
+
+        [HttpPost("envoieMail")]
+        public void post3(Mail _mail)
+        {
+            SmtpClient client = new SmtpClient()
+            {
+                Port = 587,
+                Host = "smtp.gmail.com",
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(config["parametreMail:from"], config["parametreMail:mdp"])
+            };
+
+            MailMessage msg = new MailMessage(Protection.XSS(_mail.expediteur), Protection.XSS(_mail.destinataire), _mail.sujet, _mail.message)
+            {
+                Priority = MailPriority.Normal,
+                BodyEncoding = System.Text.Encoding.UTF8,
+                DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
+            };
+
+            client.Send(msg);
+
+            return;
         }
     }
 }
