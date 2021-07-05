@@ -3,7 +3,6 @@ using back.dbContext;
 using back.model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,12 +22,14 @@ namespace back.Controllers
         }
 
         [HttpPost("ajouter")]
-        public JsonResult AjouterPain(Pain[] _pain)
+        public JsonResult AjouterPain(Pain[] _listePain)
         {
             try
             {
-                foreach (Pain item in _pain)
+                foreach (Pain item in _listePain)
                 {
+                    item.nomPain = Protection.XSS(item.nomPain);
+
                     context.pain.Add(item);
                 }
 
@@ -56,6 +57,7 @@ namespace back.Controllers
         {
             try
             {
+                _pain.nomPain = Protection.XSS(_pain.nomPain);
                 context.pain.Update(_pain);
                 context.SaveChanges();
 
@@ -70,12 +72,12 @@ namespace back.Controllers
         [HttpDelete("supprimer/{_id}")]
         public JsonResult Supprimer(int _id)
         {
-            var painDelete = (from pain in context.pain
-                              where pain.idPain == _id
-                              select pain).FirstOrDefault();
-
             try
             {
+                var painDelete = (from pain in context.pain
+                                  where pain.idPain == _id
+                                  select pain).FirstOrDefault();
+
                 context.pain.Remove(painDelete);
                 context.SaveChanges();
 
@@ -83,7 +85,7 @@ namespace back.Controllers
             }
             catch(Exception e)
             {
-                return new JsonResult("existe plus");
+                return new JsonResult("existe pas");
             }
         }
 
