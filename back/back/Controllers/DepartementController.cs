@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
-using back.Models;
 using System.Data;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
@@ -40,7 +39,7 @@ namespace back.Controllers
         [HttpGet("lister")]
         public JsonResult ListeDepartement()
         {
-            List<Departement> liste = new List<Departement>();
+            List<dynamic> liste = new List<dynamic>();
 
             connection.Open();
 
@@ -64,7 +63,7 @@ namespace back.Controllers
             // parcours le resultat de la requete dans un DataTable
             foreach (DataRow item in _table.Rows)
             {
-                liste.Add(new Departement(int.Parse(item["idDep"].ToString()), item["nomDep"].ToString()));
+                //liste.Add(new Departement(int.Parse(item["idDep"].ToString()), item["nomDep"].ToString()));
             }
 
             return new JsonResult(liste);
@@ -150,7 +149,7 @@ namespace back.Controllers
         }
 
         [HttpPost("envoieMail")]
-        public void post3(Mail _mail)
+        public void post3(dynamic _mail)
         {
             SmtpClient client = new SmtpClient()
             {

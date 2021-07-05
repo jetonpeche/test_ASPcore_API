@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Ajouter pain</h1>
+<mat-dialog-content>
+    <form #e="ngForm">
+        <input type="hidden" name="idPain" [ngModel]="data._pain.idPain" required>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Nom</mat-label>
+            <input type="text" name="nomPain" matInput [(ngModel)]="data._pain.nomPain" required>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="Modifier(e)">Modifier pain</button>
+    <button mat-button mat-dialog-close color="warn" (click)="AnnulerModif()">Fermer</button>
+</mat-dialog-actions>

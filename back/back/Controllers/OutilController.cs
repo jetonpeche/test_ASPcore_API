@@ -1,5 +1,4 @@
 ﻿using back.Classe;
-using back.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -48,9 +47,9 @@ namespace back.Controllers
         }
 
         [HttpPost("ajouter")]
-        public JsonResult Post(Outil _outil)
+        public JsonResult Post(dynamic _outil)
         {
-            connection.Open();
+            connection.Open(); 
 
             MySqlCommand cmd = connection.CreateCommand();
             cmd.CommandText = "INSERT INTO outils (nomOutil) VALUES (@nom)";
@@ -66,7 +65,7 @@ namespace back.Controllers
         }
 
         [HttpPost("modifier")]
-        public JsonResult Post2(Outil _outil)
+        public JsonResult Post2(dynamic _outil)
         {
             int _nb;
 

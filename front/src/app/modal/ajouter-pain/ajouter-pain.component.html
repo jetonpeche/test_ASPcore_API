@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Ajouter pain</h1>
+<mat-dialog-content>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Nombre ajout</mat-label>
+        <input #nbInput (keyup)="AjouterInput(+nbInput.value)" type="number" matInput>
+    </mat-form-field>
+
+    <form #e="ngForm">
+        <div *ngFor="let element of listeInput">
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre ajout</mat-label>
+                <input type="text" [name]="element.name" matInput ngModel required>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="Ajouter(e)">Ajouter</button>
+</mat-dialog-actions>
