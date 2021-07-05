@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using back.Classe;
 using System.Net.Mail;
 using System.Net;
+using System.Data.SqlClient;
 #endregion
 
 namespace back.Controllers
@@ -22,7 +23,7 @@ namespace back.Controllers
     [ApiController]
     public class DepartementController : ControllerBase
     {
-        private MySqlConnection connection;
+        private SqlConnection connection;
         private readonly IWebHostEnvironment env;
         private readonly IConfiguration config;
 
@@ -31,20 +32,22 @@ namespace back.Controllers
             config = _config;
             env = _env;
 
-            // bdd => connexion a la BDD mySQL
-            connection = new MySqlConnection(_config.GetConnectionString("bdd"));
+            // bdd => connexion a la BDD SQL server
+            connection = new SqlConnection(_config.GetConnectionString("bddServer"));
         }
 
         // methode GET + route => Departement/lister
-        [HttpGet("lister")]
+        [HttpGet]
         public JsonResult ListeDepartement()
         {
+
+
             List<dynamic> liste = new List<dynamic>();
 
             connection.Open();
 
-            MySqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * FROM departement";
+            SqlCommand cmd = connection.CreateCommand();
+            cmd.CommandText = "SELECT * FROM dbo.departement";
 
             cmd.Prepare();
             cmd.ExecuteNonQuery();
@@ -61,12 +64,12 @@ namespace back.Controllers
             }
 
             // parcours le resultat de la requete dans un DataTable
-            foreach (DataRow item in _table.Rows)
+           /* foreach (DataRow item in _table.Rows)
             {
                 //liste.Add(new Departement(int.Parse(item["idDep"].ToString()), item["nomDep"].ToString()));
-            }
+            }*/
 
-            return new JsonResult(liste);
+            return new JsonResult(_table);
         }
 
 

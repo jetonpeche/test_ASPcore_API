@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
+using back.dbContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace back
 {
@@ -41,8 +43,7 @@ namespace back
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             }).AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
-            // mySQL
-           //services.AddTransient<MySqlConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:bdd"]));
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("bddServer")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

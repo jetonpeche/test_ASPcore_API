@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,11 +15,11 @@ namespace back.Controllers
     [ApiController]
     public class OutilController : ControllerBase
     {
-        private readonly MySqlConnection connection;
+        private readonly SqlConnection connection;
 
         public OutilController(IConfiguration _config)
         {
-            connection = new MySqlConnection(_config.GetConnectionString("bdd"));
+            connection = new SqlConnection(_config.GetConnectionString("bdd"));
         }
 
         [HttpGet("lister")]
@@ -27,7 +27,7 @@ namespace back.Controllers
         {
             connection.Open();
 
-            MySqlCommand cmd = connection.CreateCommand();
+            SqlCommand cmd = connection.CreateCommand();
             cmd.CommandText = "SELECT * FROM outils";
 
             cmd.Prepare();
@@ -51,7 +51,7 @@ namespace back.Controllers
         {
             connection.Open(); 
 
-            MySqlCommand cmd = connection.CreateCommand();
+            SqlCommand cmd = connection.CreateCommand();
             cmd.CommandText = "INSERT INTO outils (nomOutil) VALUES (@nom)";
 
             cmd.Parameters.AddWithValue("@nom", Protection.XSS(_outil.nomOutil));
@@ -77,7 +77,7 @@ namespace back.Controllers
             {
                 connection.Open();
 
-                MySqlCommand cmd = connection.CreateCommand();
+                SqlCommand cmd = connection.CreateCommand();
                 cmd.CommandText = "UPDATE outils SET nomOutil = @nom WHERE idOutil = @id";
 
                 cmd.Parameters.AddWithValue("@nom", Protection.XSS(_outil.nomOutil));

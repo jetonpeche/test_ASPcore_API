@@ -3,10 +3,10 @@ using back.model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,7 +16,7 @@ namespace back.Controllers
     [ApiController]
     public class PainController : ControllerBase
     {
-        private MySqlConnection connection;
+        private SqlConnection connection;
         private readonly IConfiguration config;
 
         public PainController(IConfiguration _config)
@@ -24,7 +24,7 @@ namespace back.Controllers
             config = _config;
 
             // bdd => connexion a la BDD mySQL
-            connection = new MySqlConnection(_config.GetConnectionString("bdd"));
+            connection = new SqlConnection(_config.GetConnectionString("bddServer"));
         }
 
         [HttpPost("ajouter")]
@@ -32,7 +32,7 @@ namespace back.Controllers
         {
             connection.Open();
 
-            MySqlCommand cmd = connection.CreateCommand();
+            SqlCommand cmd = connection.CreateCommand();
             cmd.CommandText = "INSERT INTO pain (nomPain) VALUES (@nom)";
             
 
@@ -55,8 +55,8 @@ namespace back.Controllers
         {
             connection.Open();
 
-            MySqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * FROM pain ORDER BY nomPain";
+            SqlCommand cmd = connection.CreateCommand();
+            cmd.CommandText = "SELECT * FROM dbo.pain ORDER BY nomPain";
 
             cmd.Prepare();
             cmd.ExecuteNonQuery();
@@ -80,8 +80,8 @@ namespace back.Controllers
         {
             connection.Open();
 
-            MySqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "UPDATE pain SET nomPain = @nom WHERE idPain = @id";
+            SqlCommand cmd = connection.CreateCommand();
+            cmd.CommandText = "UPDATE dbo.pain SET nomPain = @nom WHERE idPain = @id";
 
             cmd.Parameters.AddWithValue("@nom", Protection.XSS(_pain.nomPain));
             cmd.Parameters.AddWithValue("@id", _pain.idPain);
@@ -99,8 +99,8 @@ namespace back.Controllers
         {
             connection.Open();
 
-            MySqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "DELETE FROM pain WHERE idPain = @id";
+            SqlCommand cmd = connection.CreateCommand();
+            cmd.CommandText = "DELETE FROM dbo.pain WHERE idPain = @id";
 
             cmd.Parameters.AddWithValue("@id", _id);
 
