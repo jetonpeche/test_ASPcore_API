@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
 using System.Data;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +14,7 @@ using back.Classe;
 using System.Net.Mail;
 using System.Net;
 using System.Data.SqlClient;
+using back.dbContext;
 #endregion
 
 namespace back.Controllers
@@ -26,11 +26,13 @@ namespace back.Controllers
         private SqlConnection connection;
         private readonly IWebHostEnvironment env;
         private readonly IConfiguration config;
+        private DataContext context;
 
-        public DepartementController(IConfiguration _config, IWebHostEnvironment _env)
+        public DepartementController(IConfiguration _config, IWebHostEnvironment _env, DataContext _context)
         {
             config = _config;
             env = _env;
+            context = _context;
 
             // bdd => connexion a la BDD SQL server
             connection = new SqlConnection(_config.GetConnectionString("bddServer"));
@@ -40,38 +42,11 @@ namespace back.Controllers
         [HttpGet]
         public JsonResult ListeDepartement()
         {
+            var res = from d in context.departement
+                      select d;
 
-
-            List<dynamic> liste = new List<dynamic>();
-
-            connection.Open();
-
-            SqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * FROM dbo.departement";
-
-            cmd.Prepare();
-            cmd.ExecuteNonQuery();
-
-            DataTable _table = new DataTable();
-
-            using(var reader = cmd.ExecuteReader())
-            {
-                // resultat de la requete SQL
-                _table.Load(reader);
-
-                reader.Close();
-                connection.Close();
-            }
-
-            // parcours le resultat de la requete dans un DataTable
-           /* foreach (DataRow item in _table.Rows)
-            {
-                //liste.Add(new Departement(int.Parse(item["idDep"].ToString()), item["nomDep"].ToString()));
-            }*/
-
-            return new JsonResult(_table);
+            return new JsonResult(res);
         }
-
 
         // envoie JSON sans type
         // POST par defaut => /Departement + JSON

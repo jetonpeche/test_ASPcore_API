@@ -1,4 +1,5 @@
 ﻿using back.Classe;
+using back.dbContext;
 using back.model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,9 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace back.Controllers
 {
@@ -16,100 +15,76 @@ namespace back.Controllers
     [ApiController]
     public class PainController : ControllerBase
     {
-        private SqlConnection connection;
-        private readonly IConfiguration config;
+        private readonly DataContext context;
 
-        public PainController(IConfiguration _config)
+        public PainController(DataContext _context)
         {
-            config = _config;
-
-            // bdd => connexion a la BDD mySQL
-            connection = new SqlConnection(_config.GetConnectionString("bddServer"));
+            context = _context;
         }
 
         [HttpPost("ajouter")]
         public JsonResult AjouterPain(Pain[] _pain)
         {
-            connection.Open();
+            try
+            {
+                foreach (Pain item in _pain)
+                {
+                    context.pain.Add(item);
+                }
 
-            SqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "INSERT INTO pain (nomPain) VALUES (@nom)";
-            
+                context.SaveChanges();
 
-            foreach (Pain element in _pain)
-            {   
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@nom", Protection.XSS(element.nomPain));
-
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                return new JsonResult("Ajouts faient");
             }
-
-            connection.Close();
-
-            return new JsonResult("Ajouté");
+            catch (Exception e)
+            {
+                return new JsonResult("pas de connexion");
+            }
         }
 
         [HttpGet("lister")]
         public JsonResult Lister()
         {
-            connection.Open();
+            var listeReturn = from pain in context.pain orderby pain.nomPain descending
+                              select pain;
 
-            SqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * FROM dbo.pain ORDER BY nomPain";
-
-            cmd.Prepare();
-            cmd.ExecuteNonQuery();
-
-            DataTable _table = new DataTable();
-
-            using (var reader = cmd.ExecuteReader())
-            {
-                // resultat de la requete SQL
-                _table.Load(reader);
-
-                reader.Close();
-                connection.Close();
-            }
-
-            return new JsonResult(_table);
+            return new JsonResult(listeReturn);
         }
 
         [HttpPut("modifier")]
         public JsonResult Modifier(Pain _pain)
         {
-            connection.Open();
+            try
+            {
+                context.pain.Update(_pain);
+                context.SaveChanges();
 
-            SqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "UPDATE dbo.pain SET nomPain = @nom WHERE idPain = @id";
-
-            cmd.Parameters.AddWithValue("@nom", Protection.XSS(_pain.nomPain));
-            cmd.Parameters.AddWithValue("@id", _pain.idPain);
-
-            cmd.Prepare();
-            cmd.ExecuteNonQuery();
-
-            connection.Close();
-
-            return new JsonResult(true);
+                return new JsonResult("fait");
+            }
+            catch(Exception e)
+            {
+                return new JsonResult("existe plus");
+            }
         }
 
         [HttpDelete("supprimer/{_id}")]
         public JsonResult Supprimer(int _id)
         {
-            connection.Open();
+            var painDelete = (from pain in context.pain
+                              where pain.idPain == _id
+                              select pain).FirstOrDefault();
 
-            SqlCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "DELETE FROM dbo.pain WHERE idPain = @id";
+            try
+            {
+                context.pain.Remove(painDelete);
+                context.SaveChanges();
 
-            cmd.Parameters.AddWithValue("@id", _id);
-
-            cmd.Prepare();
-            cmd.ExecuteNonQuery();
-
-            connection.Close();
-
-            return new JsonResult(true);
+                return new JsonResult("fait");
+            }
+            catch(Exception e)
+            {
+                return new JsonResult("existe plus");
+            }
         }
 
     }

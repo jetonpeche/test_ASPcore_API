@@ -43,6 +43,7 @@ namespace back
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             }).AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
+            // pour pouvoir generer les tables de la BDD
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("bddServer")));
         }
 

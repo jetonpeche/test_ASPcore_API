@@ -43,16 +43,8 @@ D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\back.runtimeconfig
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\back.runtimeconfig.dev.json
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\back.dll
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\back.pdb
-D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
-D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
-D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\K4os.Compression.LZ4.dll
-D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\K4os.Compression.LZ4.Streams.dll
-D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\K4os.Hash.xxHash.dll
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
-D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\MySql.Data.dll
-D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\Ubiety.Dns.Core.dll
-D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\Zstandard.Net.dll
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
