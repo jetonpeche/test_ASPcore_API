@@ -1,6 +1,6 @@
 ﻿using back.Classe;
 using back.dbContext;
-using back.model;
+using back.table;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

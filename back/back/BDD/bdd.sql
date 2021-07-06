@@ -1,42 +1,26 @@
-create table pain
-(
-    idPain int AUTO_INCREMENT,
-    nomPain varchar(50),
+DELETE FROM painCommande
+DELETE FROM commande
+DELETE FROM utilisateur
+DELETE FROM pain
 
-    primary key (idPain)
-);
+-- autoriser difinir la clé primaire
+SET IDENTITY_INSERT utilisateur ON; 
+SET IDENTITY_INSERT pain ON; 
+SET IDENTITY_INSERT commande ON; 
 
-create table utilisateur
-(
-    idUtilisateur int AUTO_INCREMENT,
-    nomUtilisateur varchar(100),
-    telUtilisateur char(10),
-    mailUtilisateur varchar(100),
+INSERT INTO utilisateur (idUtilisateur, nomUtilisateur, prenomUtilisateur, adresseUtilisateur, mailUtilisateur, mdpUtilisateur) 
+VALUES (1, 'Nicolas', 'Peyrachon', 'lyon', 'a@.com', 'mdp'), (2, 'Toto', 'Radis', 'Paris', 'b@b.com', 'mdp');
 
-    primary key (idUtilisateur)
-);
+INSERT INTO pain (idPain, nomPain) VALUES (1, 'pain blanc'), (2, 'pain au seigle'), (3, 'pain aux noix');
 
-create table commande
-(
-    idCommande int AUTO_INCREMENT,
-    idUtilisateur int not null,
+-- commande utilisateur 1
+INSERT INTO commande (idCommande, idUtilisateur, dateLivraisonCommande) VALUES (1, 1, convert(datetime, '2020-06-25 00:00:00', 20));
+INSERT INTO painCommande (idCommande, idPain, qte) VALUES (1, 1, 20), (1, 2, 45);
 
-    dateCommande datetime,
+-- commande utilisateur 2
+INSERT INTO commande (idCommande, idUtilisateur, dateLivraisonCommande) VALUES (2, 2, convert(datetime, '2020-06-25 00:00:00', 20));
+INSERT INTO painCommande (idCommande, idPain, qte) VALUES (2, 3, 1), (2, 1, 5);
 
-    primary key(idCommande),
-
-    foreign key (idUtilisateur) references utilisateur (idUtilisateur)
-);
-
-create table pain_commande
-(
-    idCommande int not null,
-    idPain int not null,
-
-    qte int not null,
-
-    primary key (idCommande, idPain),
-
-    foreign key (idCommande) references commande (idCommande),
-    foreign key (idPain) references pain (idPain)
-);
+SET IDENTITY_INSERT utilisateur OFF; 
+SET IDENTITY_INSERT pain OFF; 
+SET IDENTITY_INSERT commande OFF; 

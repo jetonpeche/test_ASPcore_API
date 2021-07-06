@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace back.model
+namespace back.table
 {
     public class Pain
     {
@@ -15,5 +15,7 @@ namespace back.model
         [Column(TypeName = "nvarchar(50)")]
         [Required]
         public string nomPain { get; set; } 
+
+        public List<PainCommande> listePainCommande { get; set; }
     }
 }

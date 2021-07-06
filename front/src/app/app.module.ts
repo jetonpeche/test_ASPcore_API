@@ -24,6 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { CommandeComponent } from './component/commande/commande.component';
 
 
 
@@ -32,7 +33,8 @@ import { MatIconModule } from '@angular/material/icon';
     AppComponent,
     PainComponent,
     AjouterPainComponent,
-    ModifierPainComponent
+    ModifierPainComponent,
+    CommandeComponent
   ],
   imports: [
     BrowserModule,
