@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // components
 import { AppComponent } from './app.component';
 import { PainComponent } from './component/pain/pain.component';
+import { CommandeComponent } from './component/commande/commande.component';
 
 // modal
 import { AjouterPainComponent } from './modal/ajouter-pain/ajouter-pain.component';
@@ -24,9 +25,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { CommandeComponent } from './component/commande/commande.component';
-
-
 
 @NgModule({
   declarations: [

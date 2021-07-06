@@ -36,7 +36,8 @@ namespace back.Controllers
 
                                     // selection des infos de l'utilisateur dans des { }
                                     utilisateur = new { uti.nomUtilisateur, uti.prenomUtilisateur, uti.mailUtilisateur },
-                                    // sous requete
+
+                                    // sous requete liste de des pains de la commande
                                     liste = (from p in context.painCommande
                                              join pain in context.pain
                                              on p.idPain equals pain.idPain
@@ -51,6 +52,32 @@ namespace back.Controllers
         public JsonResult Ajouter(Commande commande)
         {
             return new JsonResult("");
+        }
+
+        [HttpDelete("supprimer/{_id}")]
+        public JsonResult Supprimer(int _id)
+        {
+            try
+            {
+                var painCommandeDelete = (from pc in context.painCommande
+                                          where pc.idCommande == _id
+                                          select pc).ToArray();
+
+                var commandeDelete = (from c in context.commande
+                                      where c.idCommande == _id
+                                      select c).FirstOrDefault();
+
+                context.painCommande.RemoveRange(painCommandeDelete);
+                context.commande.Remove(commandeDelete);
+
+                context.SaveChanges();
+
+                return new JsonResult(true);
+            }
+            catch(Exception e)
+            {
+                return new JsonResult(false);
+            }
         }
     }
 }
