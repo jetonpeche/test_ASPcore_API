@@ -2,6 +2,9 @@
 
     <h2>Listing général des commandes à préparer</h2>
 
+    <button mat-raised-button color="accent" (click)="ModalAjoutCommande()">Ajouter commande</button>
+    <br><br>
+
     <table mat-table [dataSource]="listeCommande" multiTemplateDataRows class="mat-elevation-z8">
 
         <ng-container matColumnDef="dateLivraisonCommande">

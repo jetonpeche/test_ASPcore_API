@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using back.dialogueBD;
 
 namespace back.Controllers
 {
@@ -17,33 +18,13 @@ namespace back.Controllers
         public CommandeController(DataContext _context)
         {
             context = _context;
+            D_Commande.context = _context;
         }
 
         [HttpGet("listeGeneral")]
         public JsonResult Lister()
         {
-            var listeCommande = from commande in context.commande
-
-                                join uti in context.utilisateur
-                                on commande.utilisateur.idUtilisateur equals uti.idUtilisateur
-
-                                orderby commande.dateLivraisonCommande ascending
-                                select new
-                                {
-                                    commande.idCommande,
-                                    commande.dateLivraisonCommande,
-                                    uti.adresseUtilisateur,
-
-                                    // selection des infos de l'utilisateur dans des { }
-                                    utilisateur = new { uti.nomUtilisateur, uti.prenomUtilisateur, uti.mailUtilisateur },
-
-                                    // sous requete liste de des pains de la commande
-                                    liste = (from p in context.painCommande
-                                             join pain in context.pain
-                                             on p.idPain equals pain.idPain
-                                             where p.commande.utilisateur.idUtilisateur == uti.idUtilisateur
-                                             select new { pain.idPain, pain.nomPain, p.qte }) as object
-                                };
+            var listeCommande = D_Commande.ListerTouteCommandes();
 
             return new JsonResult(listeCommande);
         }
@@ -59,18 +40,7 @@ namespace back.Controllers
         {
             try
             {
-                var painCommandeDelete = (from pc in context.painCommande
-                                          where pc.idCommande == _id
-                                          select pc).ToArray();
-
-                var commandeDelete = (from c in context.commande
-                                      where c.idCommande == _id
-                                      select c).FirstOrDefault();
-
-                context.painCommande.RemoveRange(painCommandeDelete);
-                context.commande.Remove(commandeDelete);
-
-                context.SaveChanges();
+                D_Commande.SupprimerCommande(_id);
 
                 return new JsonResult(true);
             }

@@ -107,3 +107,4 @@ D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\runtimes\win-x64\n
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Xampp\htdocs\testASP_API\back\back\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll

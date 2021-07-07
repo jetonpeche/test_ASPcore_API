@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "7qwBKtWauWp8UQ0Al06IeHQWZPRVfe5Z9qVXh6bbGHfZYckAK4BCqMt18CiSYl5Edfyuulwum4LccbmocKMdjg==",
+  "dgSpecHash": "DevPPiBR2KJpRbi604v+gh5k5ayVkwSWUl0vHvVk68kLwK2JNtscEiQ3f+fb8NGLA6vCpj+GqHHnjL4q7pQkgw==",
   "success": true,
   "projectFilePath": "D:\\Xampp\\htdocs\\testASP_API\\back\\back\\back.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\nicol\\.nuget\\packages\\bcrypt.net-next\\4.0.0\\bcrypt.net-next.4.0.0.nupkg.sha512",
     "C:\\Users\\nicol\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\nicol\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.9\\microsoft.aspnetcore.jsonpatch.3.1.9.nupkg.sha512",
     "C:\\Users\\nicol\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.9\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.9.nupkg.sha512",

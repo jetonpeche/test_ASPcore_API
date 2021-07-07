@@ -1,12 +1,11 @@
 ﻿using back.Classe;
 using back.dbContext;
+using back.dialogueBD;
 using back.table;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace back.Controllers
 {
@@ -19,21 +18,15 @@ namespace back.Controllers
         public PainController(DataContext _context)
         {
             context = _context;
+            D_Pain.context = context;
         }
 
         [HttpPost("ajouter")]
-        public JsonResult AjouterPain(Pain[] _listePain)
+        public JsonResult Ajouter(Pain[] _listePain)
         {
             try
             {
-                foreach (Pain item in _listePain)
-                {
-                    item.nomPain = Protection.XSS(item.nomPain);
-
-                    context.pain.Add(item);
-                }
-
-                context.SaveChanges();
+                D_Pain.Ajouter(_listePain);
 
                 return new JsonResult("Ajouts faient");
             }
@@ -46,8 +39,7 @@ namespace back.Controllers
         [HttpGet("lister")]
         public JsonResult Lister()
         {
-            var listeReturn = from pain in context.pain orderby pain.nomPain descending
-                              select pain;
+            var listeReturn = D_Pain.Lister();
 
             return new JsonResult(listeReturn);
         }
@@ -57,9 +49,7 @@ namespace back.Controllers
         {
             try
             {
-                _pain.nomPain = Protection.XSS(_pain.nomPain);
-                context.pain.Update(_pain);
-                context.SaveChanges();
+                D_Pain.Modifier(_pain);
 
                 return new JsonResult("fait");
             }
@@ -74,12 +64,7 @@ namespace back.Controllers
         {
             try
             {
-                var painDelete = (from pain in context.pain
-                                  where pain.idPain == _id
-                                  select pain).FirstOrDefault();
-
-                context.pain.Remove(painDelete);
-                context.SaveChanges();
+                D_Pain.Supprimer(_id);
 
                 return new JsonResult("fait");
             }

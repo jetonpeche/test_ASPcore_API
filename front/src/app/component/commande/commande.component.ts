@@ -3,6 +3,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { Commande } from 'src/app/type/Commande';
 import { CommandeService } from 'src/app/services/commande.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AjouterCommandeComponent } from 'src/app/modal/ajouter-commande/ajouter-commande.component';
 
 @Component({
   selector: 'app-commande',
@@ -22,16 +24,11 @@ export class CommandeComponent implements OnInit
   columnsToDisplay = ['dateLivraisonCommande', 'adresseUtilisateur', 'supprimer'];
   expandedElement: Commande | null = null;
 
-  constructor(private commandeService: CommandeService) { }
+  constructor(private commandeService: CommandeService, private dialog: MatDialog) { }
 
   ngOnInit(): void 
   {
-    this.commandeService.ListeGeneral().subscribe(
-      (_liste: Commande[]) =>
-      {
-        this.listeCommande.data = _liste;
-      } 
-    );
+    this.ListeGeneral();
   }
 
   SupprimerCommande(_id: number): void
@@ -53,6 +50,28 @@ export class CommandeComponent implements OnInit
       );
     }
     
+  }
+
+  ModalAjoutCommande(): void
+  {
+    const DIALOG_REF = this.dialog.open(AjouterCommandeComponent);
+    DIALOG_REF.beforeClosed().subscribe(
+      () =>
+      {
+        if(DIALOG_REF.componentInstance.estAjouter)
+          this.ListeGeneral();
+      }
+    )
+  }
+
+  private ListeGeneral(): void
+  {
+    this.commandeService.ListeGeneral().subscribe(
+      (_liste: Commande[]) =>
+      {
+        this.listeCommande.data = _liste;
+      } 
+    );
   }
 
 }

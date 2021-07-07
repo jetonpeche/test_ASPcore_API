@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { PainService } from './services/pain.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConnexionUtilisateurComponent } from './modal/connexion-utilisateur/connexion-utilisateur.component';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,11 @@ import { PainService } from './services/pain.service';
 })
 export class AppComponent
 {
+  constructor(private dialog: MatDialog) { }
+
+  ModalConnexion(): void
+  {
+    const DIALOG_REF = this.dialog.open(ConnexionUtilisateurComponent);
+
+  }
 }

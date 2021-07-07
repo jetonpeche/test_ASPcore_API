@@ -11,8 +11,6 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using back.Classe;
-using System.Net.Mail;
-using System.Net;
 using System.Data.SqlClient;
 using back.dbContext;
 #endregion
@@ -124,31 +122,6 @@ namespace back.Controllers
             {
                 return new JsonResult("existe");
             }
-        }
-
-        [HttpPost("envoieMail")]
-        public void post3(dynamic _mail)
-        {
-            SmtpClient client = new SmtpClient()
-            {
-                Port = 587,
-                Host = "smtp.gmail.com",
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(config["parametreMail:from"], config["parametreMail:mdp"])
-            };
-
-            MailMessage msg = new MailMessage(Protection.XSS(_mail.expediteur), Protection.XSS(_mail.destinataire), _mail.sujet, _mail.message)
-            {
-                Priority = MailPriority.Normal,
-                BodyEncoding = System.Text.Encoding.UTF8,
-                DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
-            };
-
-            client.Send(msg);
-
-            return;
         }
     }
 }

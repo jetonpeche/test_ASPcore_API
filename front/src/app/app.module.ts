@@ -9,13 +9,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { PainComponent } from './component/pain/pain.component';
 import { CommandeComponent } from './component/commande/commande.component';
+import { UtilisateurComponent } from './component/utilisateur/utilisateur.component';
 
 // modal
 import { AjouterPainComponent } from './modal/ajouter-pain/ajouter-pain.component';
 import { ModifierPainComponent } from './modal/modifier-pain/modifier-pain.component';
+import { AjouterCommandeComponent } from './modal/ajouter-commande/ajouter-commande.component';
+import { AjouterUtilisateurComponent } from './modal/ajouter-utilisateur/ajouter-utilisateur.component';
+import { ConnexionUtilisateurComponent } from './modal/connexion-utilisateur/connexion-utilisateur.component';
 
 // services
 import { PainService } from './services/pain.service';
+import { CommandeService } from './services/commande.service';
 
 // mat
 import { MatButtonModule } from '@angular/material/button';
@@ -32,7 +37,11 @@ import { MatIconModule } from '@angular/material/icon';
     PainComponent,
     AjouterPainComponent,
     ModifierPainComponent,
-    CommandeComponent
+    CommandeComponent,
+    AjouterCommandeComponent,
+    UtilisateurComponent,
+    AjouterUtilisateurComponent,
+    ConnexionUtilisateurComponent
   ],
   imports: [
     BrowserModule,
@@ -48,8 +57,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatDialogModule,
     MatIconModule
   ],
-  entryComponents: [AjouterPainComponent, ModifierPainComponent],
-  providers: [PainService],
+  entryComponents: [AjouterPainComponent, ModifierPainComponent, AjouterCommandeComponent, AjouterUtilisateurComponent, ConnexionUtilisateurComponent],
+  providers: [PainService, CommandeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
