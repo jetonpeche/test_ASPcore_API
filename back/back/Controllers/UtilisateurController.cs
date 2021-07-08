@@ -64,5 +64,20 @@ namespace back.Controllers
 
             return new JsonResult(resultat);
         }
+
+        [HttpDelete("supprimer/{_id}")]
+        public JsonResult Supprimer(int _id)
+        {
+            try
+            {
+                D_Utilisateur.Supprimer(_id);
+
+                return new JsonResult("ok");
+            }
+            catch (Exception)
+            {
+                return new JsonResult("erreur");
+            }
+        }
     }
 }

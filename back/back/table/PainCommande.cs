@@ -19,6 +19,6 @@ namespace back.table
         public int qte { get; set; }
 
         public Commande commande { get; set; }
-        public Pain pain { get; set;  }
+        public Pain pain { get; set; }
     }
 }

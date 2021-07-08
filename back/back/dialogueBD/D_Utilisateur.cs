@@ -79,5 +79,34 @@ namespace back.dialogueBD
                 return false;
             }
         }
+
+        /// <summary>
+        ///  Supprime toutes les commandes de l'utilisateur et l'utilisateur
+        /// </summary>
+        /// <param name="_idUtilisateur"></param>
+        public static void Supprimer(int _idUtilisateur)
+        {
+            List<int> listeIdCommande = (from c in context.commande
+                                   where c.idUtilisateur == _idUtilisateur
+                                   select c.idCommande).ToList<int>();
+
+            foreach (int item in listeIdCommande)
+            {
+                PainCommande painCommande = (from pc in context.painCommande
+                                         where pc.idCommande == item
+                                         select pc).FirstOrDefault();
+
+                if(painCommande != null)
+                    context.painCommande.Remove(painCommande);
+            }
+
+            Utilisateur utilisateur = (from uti in context.utilisateur
+                               where uti.idUtilisateur == _idUtilisateur
+                               select uti).FirstOrDefault();
+
+            context.utilisateur.Remove(utilisateur);
+
+            context.SaveChanges();
+        }
     }
 }

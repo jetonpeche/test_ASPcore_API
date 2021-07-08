@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using back.dialogueBD;
+using back.model;
 
 namespace back.Controllers
 {
@@ -24,15 +25,39 @@ namespace back.Controllers
         [HttpGet("listeGeneral")]
         public JsonResult Lister()
         {
-            var listeCommande = D_Commande.ListerTouteCommandes();
+            IQueryable listeCommande = D_Commande.ListerTouteCommandes();
 
             return new JsonResult(listeCommande);
         }
 
-        [HttpPost("ajouterCommande")]
-        public JsonResult Ajouter(Commande commande)
+        [HttpGet("listeCommandeUtilisateur/{_id}")]
+        public JsonResult ListeUtilisateur(int _id)
         {
-            return new JsonResult("");
+            IQueryable liste = D_Commande.ListerCommandeUtilisateur(_id);
+
+            return new JsonResult(liste);
+        }
+
+        [HttpGet("listeCommandeJour")]
+        public JsonResult ListeJour()
+        {
+            IQueryable liste = D_Commande.ListerCommandeJour();
+
+            return new JsonResult(liste);
+        }
+
+        [HttpPost("ajouterCommande")]
+        public JsonResult Ajouter(CommandeModel _commande)
+        {
+            try
+            {
+                D_Commande.AjouterCommande(_commande);
+                return new JsonResult("ok");
+            }
+            catch (Exception)
+            {
+                return new JsonResult("erreur");
+            }
         }
 
         [HttpDelete("supprimer/{_id}")]

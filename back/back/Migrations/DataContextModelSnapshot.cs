@@ -19,7 +19,7 @@ namespace back.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("back.model.Commande", b =>
+            modelBuilder.Entity("back.table.Commande", b =>
                 {
                     b.Property<int>("idCommande")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,7 @@ namespace back.Migrations
                     b.ToTable("commande");
                 });
 
-            modelBuilder.Entity("back.model.Departement", b =>
+            modelBuilder.Entity("back.table.Departement", b =>
                 {
                     b.Property<int>("idDep")
                         .ValueGeneratedOnAdd()
@@ -54,7 +54,7 @@ namespace back.Migrations
                     b.ToTable("departement");
                 });
 
-            modelBuilder.Entity("back.model.Pain", b =>
+            modelBuilder.Entity("back.table.Pain", b =>
                 {
                     b.Property<int>("idPain")
                         .ValueGeneratedOnAdd()
@@ -70,7 +70,7 @@ namespace back.Migrations
                     b.ToTable("pain");
                 });
 
-            modelBuilder.Entity("back.model.PainCommande", b =>
+            modelBuilder.Entity("back.table.PainCommande", b =>
                 {
                     b.Property<int>("idCommande")
                         .HasColumnType("int");
@@ -88,7 +88,7 @@ namespace back.Migrations
                     b.ToTable("painCommande");
                 });
 
-            modelBuilder.Entity("back.model.Utilisateur", b =>
+            modelBuilder.Entity("back.table.Utilisateur", b =>
                 {
                     b.Property<int>("idUtilisateur")
                         .ValueGeneratedOnAdd()
@@ -120,9 +120,9 @@ namespace back.Migrations
                     b.ToTable("utilisateur");
                 });
 
-            modelBuilder.Entity("back.model.Commande", b =>
+            modelBuilder.Entity("back.table.Commande", b =>
                 {
-                    b.HasOne("back.model.Utilisateur", "utilisateur")
+                    b.HasOne("back.table.Utilisateur", "utilisateur")
                         .WithMany()
                         .HasForeignKey("idUtilisateur")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -131,15 +131,15 @@ namespace back.Migrations
                     b.Navigation("utilisateur");
                 });
 
-            modelBuilder.Entity("back.model.PainCommande", b =>
+            modelBuilder.Entity("back.table.PainCommande", b =>
                 {
-                    b.HasOne("back.model.Commande", "commande")
+                    b.HasOne("back.table.Commande", "commande")
                         .WithMany("listePainCommande")
                         .HasForeignKey("idCommande")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("back.model.Pain", "pain")
+                    b.HasOne("back.table.Pain", "pain")
                         .WithMany("listePainCommande")
                         .HasForeignKey("idPain")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -150,12 +150,12 @@ namespace back.Migrations
                     b.Navigation("pain");
                 });
 
-            modelBuilder.Entity("back.model.Commande", b =>
+            modelBuilder.Entity("back.table.Commande", b =>
                 {
                     b.Navigation("listePainCommande");
                 });
 
-            modelBuilder.Entity("back.model.Pain", b =>
+            modelBuilder.Entity("back.table.Pain", b =>
                 {
                     b.Navigation("listePainCommande");
                 });
