@@ -30,7 +30,7 @@ namespace back.Controllers
 
                 return new JsonResult("Ajouts faient");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new JsonResult("pas de connexion");
             }
@@ -53,7 +53,7 @@ namespace back.Controllers
 
                 return new JsonResult("fait");
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return new JsonResult("existe plus");
             }
@@ -68,7 +68,7 @@ namespace back.Controllers
 
                 return new JsonResult("fait");
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return new JsonResult("existe pas");
             }

@@ -1,17 +1,17 @@
 ﻿using back.table;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace back.model
 {
     public class CommandeModel
     {
-        public int idUtilisateur { get; set; }
+        public int idUtilisateur { get; }
 
-        public DateTime dateLivraisonCommande { get; set; }
+        public string mailUtilisateur { get; }
 
-        public List<PainCommande> listePain { get; set; }
+        public DateTime dateLivraisonCommande { get; }
+
+        public List<PainCommande> listePain { get; }
     }
 }
