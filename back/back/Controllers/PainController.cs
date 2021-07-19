@@ -36,12 +36,46 @@ namespace back.Controllers
             }
         }
 
+        [HttpPost("rechercher/{_nomRechercher}")]
+        public JsonResult Rechercher(string _nomRechercher)
+        {
+            try
+            {
+                var liste = D_Pain.Rechercher(Protection.XSS(_nomRechercher));
+
+                return new JsonResult(liste);
+            }
+            catch (Exception)
+            {
+                return new JsonResult("erreur");
+            }
+        }
+
         [HttpGet("lister")]
         public JsonResult Lister()
         {
             var listeReturn = D_Pain.Lister();
 
             return new JsonResult(listeReturn);
+        }
+
+        [HttpPost("listerParPage/{_numPage}")]
+        public JsonResult ListerParPage(int _numPage)
+        {
+            try
+            {
+                if (_numPage > 0)
+                {
+                    var liste = D_Pain.ListerParPage(_numPage);
+                    return new JsonResult(liste);
+                }
+                else
+                    return new JsonResult("le numéro de page ne peut pas etre négatif ou égale à 0");     
+            }
+            catch (Exception)
+            {
+                return new JsonResult("erreur");
+            }
         }
 
         [HttpPut("modifier")]

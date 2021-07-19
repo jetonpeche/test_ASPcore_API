@@ -21,6 +21,35 @@ namespace back.dialogueBD
             return listeReturn;
         }
 
+        public static IQueryable ListerParPage(int _numPage)
+        {
+            int idMin = 1;
+            int idMax = 2;
+
+            if (_numPage > 1)
+                idMin = (idMin * _numPage) + 1;
+
+            idMax *= _numPage;
+            
+
+            var liste = (from pain in context.pain
+                         where pain.idPain >= idMin
+                         orderby pain.idPain ascending
+                         select new { pain.idPain, pain.nomPain }).Take(idMax);
+
+            return liste;
+        }
+
+        public static IQueryable Rechercher(string _nomPainRechercher)
+        {
+            var liste = from pain in context.pain
+                        where pain.nomPain.Contains(_nomPainRechercher)
+                        orderby pain.nomPain descending
+                        select new { pain.idPain, pain.nomPain };
+
+            return liste;
+        }
+
         public static void Modifier(Pain _pain)
         {
             _pain.nomPain = Protection.XSS(_pain.nomPain);
